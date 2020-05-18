@@ -1,3 +1,17 @@
+  
+/*
+   The author of this code  : dewanshnigam (username)
+   
+   This solution is fully correct with DP implementation.
+   It implements DP with basic logic with minor optimization
+   Time Complexity : O(n*m) 
+   Passes Subtask : All   
+
+   Question Quality : Very Good.
+   Question Difficulty : Medium.
+   
+*/
+
 import java.util.*;
 import java.io.*;
 class DP_Codechef_COUPON_Level_1_Full_AC
