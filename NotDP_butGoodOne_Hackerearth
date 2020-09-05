@@ -1,0 +1,72 @@
+//https://www.hackerearth.com/practice/algorithms/dynamic-programming/introduction-to-dynamic-programming-1/practice-problems/algorithm/odd-even-subarrays-72ad69db/description/
+/*
+
+This also hints to the question:
+
+given an array of -1s and 1s, find the number of subarrays with sum 0.
+
+[Hint: First Prefix array then Use HashMap<Integer, ArrayList<Integer>>,  arraylist is of all indices for prefix[i]. Then count the 
+number of odd indices, even indices and do eC2 + oC2 in totallity.]
+
+
+*/
+import java.util.*;
+class TestClass {
+    static int a[];
+    static int n;
+ 
+    public static void main(String args[] ) throws Exception {     
+ 
+        Scanner ob = new Scanner(System.in);
+ 
+        int t = 1;       
+        StringBuilder sb = new StringBuilder();
+ 
+        while(t-- > 0){
+            n = ob.nextInt();
+            a = new int[n]; 
+            for(int i = 0; i < n; i++){
+                a[i] = ob.nextInt();
+                if(a[i] % 2 == 0) a[i] = -1;
+                else a[i] = 1;                
+            }           
+            // now the question has been reduced to the subarrays
+            // with zero sum.
+            // now the prefix sum.
+            int prefix[] = new int[n];
+            prefix[0] = a[0];
+            for(int i = 1;i < n; i++ ){
+                prefix[i] = prefix[i-1] + a[i];
+            }
+
+            //System.out.println(Arrays.toString(prefix));
+
+            HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
+            for(int i = 0; i < n; i++){
+                ArrayList<Integer> al = map.getOrDefault(prefix[i], new ArrayList<Integer>());
+                al.add(i);
+                map.put(prefix[i], al);
+            }            
+
+            
+
+            long ans = 0L;
+
+            for(int i = 0; i < n; i++){
+                if(prefix[i] == 0) ans++;
+            }
+
+            for(ArrayList<Integer> list: map.values()){
+                long even = 0L;
+                long odd = 0L;
+                for(int x: list){
+                    if(x % 2 == 0) even++;
+                    else odd++;
+                }
+                ans += (even * (even-1) / 2) + (odd * (odd - 1) / 2);
+            }
+            sb.append(ans+"\n");
+        }
+        System.out.println(sb);
+    }
+}
